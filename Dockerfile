@@ -108,11 +108,8 @@ RUN set -eux ; \
 ENV NODE_VERSION=12.14.0
 RUN set -eux ; \
     apk add --update --no-cache libstdc++ ; \
-    if [ "${ARCH}"=='' && "$(apk --print-arch)"=='x86_64']; then \
-        export ARCH=x64 ; \
-    fi ; \
-    curl -fsSLO --compressed "https://unofficial-builds.nodejs.org/download/release/v$NODE_VERSION/node-v$NODE_VERSION-linux-$ARCH-musl.tar.xz" ; \
-    tar -xJf "node-v$NODE_VERSION-linux-$ARCH-musl.tar.xz" -C /usr/local --strip-components=1 --no-same-owner ; \
+    curl -fsSLO --compressed "https://unofficial-builds.nodejs.org/download/release/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64-musl.tar.xz" ; \
+    tar -xJf "node-v$NODE_VERSION-linux-x64-musl.tar.xz" -C /usr/local --strip-components=1 --no-same-owner ; \
     ln -s /usr/local/bin/node /usr/local/bin/nodejs ;
 
 # Smoke test
