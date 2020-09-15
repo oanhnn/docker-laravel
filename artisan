@@ -1,0 +1,44 @@
+#!/bin/sh
+
+set -ex
+
+EXEC_USER=${USER:-"www-data"}
+EXEC_ARGS="$@"
+EXEC_PATH=/var/www
+
+if [[ -f "$EXEC_PATH/artisan" ]]; then
+    if [[ "${1:-''}" == "schedule:run" ]]; then
+        SLEEP_TIME=0
+        NEW_ARGS=""
+        while [ "$#" -gt 0 ]; do
+            case "$1" in
+                --sleep)
+                SLEEP_TIME="$2"
+                shift # Remove argument name from processing
+                shift # Remove argument value from processing
+                ;;
+
+                --sleep=*)
+                SLEEP_TIME="${1#*=}"
+                shift # Remove argument from processing
+                ;;
+
+                *)
+                NEW_ARGS="$NEW_ARGS $1"
+                shift # Remove argument from processing
+                ;;
+            esac
+        done
+
+        if [[ "$SLEEP_TIME" != "0"  ]]; then
+            while [ true ]; do
+                su-exec $EXEC_USER php "$EXEC_PATH/artisan" $NEW_ARGS &
+                sleep $SLEEP_TIME
+            done
+        fi
+    fi
+
+    su-exec $EXEC_USER php "$EXEC_PATH/artisan" $EXEC_ARGS
+else
+    exec "$@"
+fi

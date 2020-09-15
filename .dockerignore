@@ -1,6 +1,8 @@
 # Docker Hooks #
 ################
 hooks
+docker-compose.test.yml
+xdebug.ini
 
 # User specific & automatically generated files #
 #################################################

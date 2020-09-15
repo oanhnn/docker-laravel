@@ -1,167 +1,171 @@
-# oanhnn/docker-php
-
-[![Docker Automated build](https://img.shields.io/docker/automated/oanhnn/php)](https://hub.docker.com/r/oanhnn/php)
-[![Docker Build Status](https://img.shields.io/docker/build/oanhnn/php)](https://hub.docker.com/r/oanhnn/php)
-[![Docker Pulls](https://img.shields.io/docker/pulls/oanhnn/php)](https://hub.docker.com/r/oanhnn/php)
-[![Software License](https://img.shields.io/github/license/oanhnn/laravel-logzio.svg)](LICENSE)
-
-## Docker image.
-
-<table>
-  <tr>
-    <th>PHP Version</th>
-    <th>Apache</th>
-    <th>CLI</th>
-    <th>FPM</th>
-    <th>ZTS</th>
-    <th>CLI - Alpine</th>
-    <th>FPM - Alpine</th>
-    <th>ZTS - Alpine</th>
-  </tr>
-  <tr>
-    <td>7.0</td>
-    <td>
-      <a href="https://travis-ci.org/oanhnn/docker-php" title="7.0-apache"><img src="https://travis-ci.org/oanhnn/docker-php.svg?branch=7.0-apache" alt="7.0-apache"/></a>
-    </td>
-    <td>
-      <a href="https://travis-ci.org/oanhnn/docker-php" title="7.0-cli"><img src="https://travis-ci.org/oanhnn/docker-php.svg?branch=7.0-cli" alt="7.0-cli"/></a>
-    </td>
-    <td>
-      <a href="https://travis-ci.org/oanhnn/docker-php" title="7.0-fpm"><img src="https://travis-ci.org/oanhnn/docker-php.svg?branch=7.0-fpm" alt="7.0-fpm"/></a>
-    </td>
-    <td>
-      <a href="https://travis-ci.org/oanhnn/docker-php" title="7.0-zts"><img src="https://travis-ci.org/oanhnn/docker-php.svg?branch=7.0-zts" alt="7.0-zts"/></a>
-    </td>
-    <td>
-      <a href="https://travis-ci.org/oanhnn/docker-php" title="7.0-cli-alpine"><img src="https://travis-ci.org/oanhnn/docker-php.svg?branch=7.0-cli-alpine" alt="7.0-cli-alpine"/></a>
-    </td>
-    <td>
-      <a href="https://travis-ci.org/oanhnn/docker-php" title="7.0-fpm-alpine"><img src="https://travis-ci.org/oanhnn/docker-php.svg?branch=7.0-fpm-alpine" alt="7.0-fpm-alpine"/></a>
-    </td>
-    <td>
-      <a href="https://travis-ci.org/oanhnn/docker-php" title="7.0-zts-alpine"><img src="https://travis-ci.org/oanhnn/docker-php.svg?branch=7.0-zts-alpine" alt="7.0-zts-alpine"/></a>
-    </td>
-  </tr>
-  <tr>
-    <td>7.1</td>
-    <td>
-      <a href="https://travis-ci.org/oanhnn/docker-php" title="7.1-apache"><img src="https://travis-ci.org/oanhnn/docker-php.svg?branch=7.1-apache" alt="7.1-apache"/></a>
-    </td>
-    <td>
-      <a href="https://travis-ci.org/oanhnn/docker-php" title="7.1-cli"><img src="https://travis-ci.org/oanhnn/docker-php.svg?branch=7.1-cli" alt="7.1-cli"/></a>
-    </td>
-    <td>
-      <a href="https://travis-ci.org/oanhnn/docker-php" title="7.1-fpm"><img src="https://travis-ci.org/oanhnn/docker-php.svg?branch=7.1-fpm" alt="7.1-fpm"/></a>
-    </td>
-    <td>
-      <a href="https://travis-ci.org/oanhnn/docker-php" title="7.1-zts"><img src="https://travis-ci.org/oanhnn/docker-php.svg?branch=7.1-zts" alt="7.1-zts"/></a>
-    </td>
-    <td>
-      <a href="https://travis-ci.org/oanhnn/docker-php" title="7.1-cli-alpine"><img src="https://travis-ci.org/oanhnn/docker-php.svg?branch=7.1-cli-alpine" alt="7.1-cli-alpine"/></a>
-    </td>
-    <td>
-      <a href="https://travis-ci.org/oanhnn/docker-php" title="7.1-fpm-alpine"><img src="https://travis-ci.org/oanhnn/docker-php.svg?branch=7.1-fpm-alpine" alt="7.1-fpm-alpine"/></a>
-    </td>
-    <td>
-      <a href="https://travis-ci.org/oanhnn/docker-php" title="7.1-zts-alpine"><img src="https://travis-ci.org/oanhnn/docker-php.svg?branch=7.1-zts-alpine" alt="7.1-zts-alpine"/></a>
-    </td>
-  </tr>
-  <tr>
-    <td>7.2</td>
-    <td>
-      <a href="https://travis-ci.org/oanhnn/docker-php" title="7.2-apache"><img src="https://travis-ci.org/oanhnn/docker-php.svg?branch=7.2-apache" alt="7.2-apache"/></a>
-    </td>
-    <td>
-      <a href="https://travis-ci.org/oanhnn/docker-php" title="7.2-cli"><img src="https://travis-ci.org/oanhnn/docker-php.svg?branch=7.2-cli" alt="7.2-cli"/></a>
-    </td>
-    <td>
-      <a href="https://travis-ci.org/oanhnn/docker-php" title="7.2-fpm"><img src="https://travis-ci.org/oanhnn/docker-php.svg?branch=7.2-fpm" alt="7.2-fpm"/></a>
-    </td>
-    <td>
-      <a href="https://travis-ci.org/oanhnn/docker-php" title="7.2-zts"><img src="https://travis-ci.org/oanhnn/docker-php.svg?branch=7.2-zts" alt="7.2-zts"/></a>
-    </td>
-    <td>
-      <a href="https://travis-ci.org/oanhnn/docker-php" title="7.2-cli-alpine"><img src="https://travis-ci.org/oanhnn/docker-php.svg?branch=7.2-cli-alpine" alt="7.2-cli-alpine"/></a>
-    </td>
-    <td>
-      <a href="https://travis-ci.org/oanhnn/docker-php" title="7.2-fpm-alpine"><img src="https://travis-ci.org/oanhnn/docker-php.svg?branch=7.2-fpm-alpine" alt="7.2-fpm-alpine"/></a>
-    </td>
-    <td>
-      <a href="https://travis-ci.org/oanhnn/docker-php" title="7.2-zts-alpine"><img src="https://travis-ci.org/oanhnn/docker-php.svg?branch=7.2-zts-alpine" alt="7.2-zts-alpine"/></a>
-    </td>
-  </tr>
-  <tr>
-    <td>7.3</td>
-    <td>
-      <a href="https://travis-ci.org/oanhnn/docker-php" title="7.3-apache"><img src="https://travis-ci.org/oanhnn/docker-php.svg?branch=7.3-apache" alt="7.3-apache"/></a>
-    </td>
-    <td>
-      <a href="https://travis-ci.org/oanhnn/docker-php" title="7.3-cli"><img src="https://travis-ci.org/oanhnn/docker-php.svg?branch=7.3-cli" alt="7.3-cli"/></a>
-    </td>
-    <td>
-      <a href="https://travis-ci.org/oanhnn/docker-php" title="7.3-fpm"><img src="https://travis-ci.org/oanhnn/docker-php.svg?branch=7.3-fpm" alt="7.3-fpm"/></a>
-    </td>
-    <td>
-      <a href="https://travis-ci.org/oanhnn/docker-php" title="7.3-zts"><img src="https://travis-ci.org/oanhnn/docker-php.svg?branch=7.3-zts" alt="7.3-zts"/></a>
-    </td>
-    <td>
-      <a href="https://travis-ci.org/oanhnn/docker-php" title="7.3-cli-alpine"><img src="https://travis-ci.org/oanhnn/docker-php.svg?branch=7.3-cli-alpine" alt="7.3-cli-alpine"/></a>
-    </td>
-    <td>
-      <a href="https://travis-ci.org/oanhnn/docker-php" title="7.3-fpm-alpine"><img src="https://travis-ci.org/oanhnn/docker-php.svg?branch=7.3-fpm-alpine" alt="7.3-fpm-alpine"/></a>
-    </td>
-    <td>
-      <a href="https://travis-ci.org/oanhnn/docker-php" title="7.3-zts-alpine"><img src="https://travis-ci.org/oanhnn/docker-php.svg?branch=7.3-zts-alpine" alt="7.3-zts-alpine"/></a>
-    </td>
-  </tr>
-  <tr>
-    <td>7.4</td>
-    <td>
-      <a href="https://travis-ci.org/oanhnn/docker-php" title="7.4-apache"><img src="https://travis-ci.org/oanhnn/docker-php.svg?branch=7.4-apache" alt="7.4-apache"/></a>
-    </td>
-    <td>
-      <a href="https://travis-ci.org/oanhnn/docker-php" title="7.4-cli"><img src="https://travis-ci.org/oanhnn/docker-php.svg?branch=7.4-cli" alt="7.4-cli"/></a>
-    </td>
-    <td>
-      <a href="https://travis-ci.org/oanhnn/docker-php" title="7.4-fpm"><img src="https://travis-ci.org/oanhnn/docker-php.svg?branch=7.4-fpm" alt="7.4-fpm"/></a>
-    </td>
-    <td>
-      <a href="https://travis-ci.org/oanhnn/docker-php" title="7.4-zts"><img src="https://travis-ci.org/oanhnn/docker-php.svg?branch=7.4-zts" alt="7.4-zts"/></a>
-    </td>
-    <td>
-      <a href="https://travis-ci.org/oanhnn/docker-php" title="7.4-cli-alpine"><img src="https://travis-ci.org/oanhnn/docker-php.svg?branch=7.4-cli-alpine" alt="7.4-cli-alpine"/></a>
-    </td>
-    <td>
-      <a href="https://travis-ci.org/oanhnn/docker-php" title="7.4-fpm-alpine"><img src="https://travis-ci.org/oanhnn/docker-php.svg?branch=7.4-fpm-alpine" alt="7.4-fpm-alpine"/></a>
-    </td>
-    <td>
-      <a href="https://travis-ci.org/oanhnn/docker-php" title="7.4-zts-alpine"><img src="https://travis-ci.org/oanhnn/docker-php.svg?branch=7.4-zts-alpine" alt="7.4-zts-alpine"/></a>
-    </td>
-  </tr>
-</table>
+# oanhnn/docker-laravel
 
 ## Features
 
-- [x] Base from PHP official image
-- [x] Install some PHP extensions: bcmath, gd, gmp, intl, opcache, pdo_mysql, pdo_pgsql, pcntl, zip, redis, imagick, xdebug
-- [x] Enable XDebug extension by environment variable
+- [x] Build from official PHP docker image
+- [x] Installed some [PHP extensions](#extensions)
+- [x] Installed XDebug extension but disable by default
+- [x] Add `artisan` bin alias to `php /var/www/artisan`
+- [x] Auto create infinite loop when run `artisan schedule:run` with option `--sleep`
+
+## Extensions
+
+```shell
+$ php -m
+```
 
 ## Usage
 
-- Use like with official image
-- Set environment variable `PHP_ENABLE_XDEBUG=1` to enable XDebug extension
+### Use like official PHP docker image
 
-## Environment variable
+Use like with official PHP image
 
-| Environment variable   | Default | Note |
-|------------------------|---------|------|
-| `PHP_ENABLE_XDEBUG`    | `0`     | Enable XDebug extension |
-| `PHP_MEMORY_LIMIT`     | `128M`  | Value of `memory_limit` in `php.ini` |
-| `PHP_MAX_EXEC_TIME`    | `30`    | Value of `max_execution_time` in `php.ini` |
-| `PHP_MAX_FILE_UPLOADS` | `20`    | Value of `max_file_uploads` in `php.ini` |
-| `PHP_POST_MAX_SIZE`    | `8M`    | Value of `post_max_size` in `php.ini` |
-| `PHP_UPLOAD_MAX_SIZE`  | `2M`    | Value of `upload_max_filesize` in `php.ini` |
-| `PHP_TIMEZONE`         | `UTC`   | Value of `date.timezone` in `php.ini` |
+### Enable XDebug
+
+Create a `xdebug.ini` file like below and mount (or copy) to `/usr/local/etc/php/conf.d/` directory in container
+
+```ini
+zend_extension=xdebug.so
+
+[Xdebug]
+xdebug.remote_enable=true
+xdebug.remote_autostart=false
+xdebug.remote_port=9000
+xdebug.remote_connect_back=false
+xdebug.remote_handler=dbgp
+xdebug.idekey=CODE
+```
+
+Config your IDE to [work with XDebug](https://devilbox.readthedocs.io/en/latest/intermediate/configure-php-xdebug/linux/vscode.html).
+
+### Run artisan command
+
+```shell
+$ docker run --rm -it oanhnn/laravel artisan inspire
+```
+
+### Run schedule with infinite loop
+
+```shell
+$ docker run --rm -d oanhnn/laravel artisan schedule:run --verbose --sleep
+```
+
+### Work with docker-compose
+
+```yml
+version: '3.5'
+
+# =========================================
+# X-Templates
+# =========================================
+x-app-service: &app-service
+  image: oanhnn/laravel
+  depends_on:
+    - mysql
+    - redis
+  environment:
+    REDIS_HOST:  redis
+    DB_HOST:     mysql
+    LOG_CHANNEL: stderr
+  restart: unless-stopped
+  volumes:
+    - .:/var/www
+    - .env:/var/www/.env
+
+# =========================================
+# Networks
+# =========================================
+networks:
+  mysql-net: {}
+  redis-net: {}
+  proxy-net: {}
+
+# =========================================
+# Volumes
+# =========================================
+volumes:
+  mysql-vol: {}
+  redis-vol: {}
+
+# =========================================
+# Services
+# =========================================
+services:
+  redis:
+    image: redis:alpine
+    command: redis-server --bind 0.0.0.0 --requirepass ${REDIS_PASSWORD}
+    networks:
+      - redis-net
+    ports:
+      - ${REDIS_PORT:-6379}:6379
+    restart: unless-stopped
+    volumes:
+      - redis-vol:/data
+
+  mysql:
+    image: mysql:8.0
+    # PDO Doesn't support MySQL 8 caching_sha2_password Authentication
+    # @see https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
+    command:
+      - '--default-authentication-plugin=mysql_native_password'
+      - '--character-set-server=utf8mb4'
+      - '--collation-server=utf8mb4_unicode_ci'
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER:          ${DB_USERNAME}
+      MYSQL_PASSWORD:      ${DB_PASSWORD}
+      MYSQL_DATABASE:      ${DB_DATABASE}
+    networks:
+      - mysql-net
+    ports:
+      - ${DB_PORT:-3306}:3306
+    restart: unless-stopped
+    volumes:
+      - mysql-vol:/var/lib/mysql
+      - .docker/mysql:/docker-entrypoint-initdb.d
+
+  nginx:
+    image: nginx:stable-alpine
+    depends_on:
+      - php
+    networks:
+      - proxy-net
+    ports:
+      - 443:443
+      - 8000:80
+    volumes:
+      - ./:/var/www
+      - .docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - .docker/nginx/keys:/etc/nginx/ssl
+
+  # This service run php-fpm
+  # It using default command in Dockerfile (from php:xx-fpm-alpine)
+  php:
+    <<: *app-service 
+    networks:
+      - mysql-net
+      - redis-net
+      - proxy-net
+
+  # This service run schedule
+  # It using `artisan schedule:run` with `--loop` to execute command `php artisan schedule:run` in a infinite loop
+  schedule:
+    <<: *app-service
+    command: artisan schedule:run --verbose --no-interaction --loop 60s
+    networks:
+      - mysql-net
+      - redis-net
+
+  # This service run queue:worker
+  # It using `artisan queue:work` or `artisan horizon`
+  horizon:
+    <<: *app-service
+    command: artisan horizon
+    networks:
+      - mysql-net
+      - redis-net
+
+```
 
 ## Contributing
 
@@ -175,5 +179,5 @@ If you would like to help take a look at the [list of issues](https://github.com
 ## License
 
 This project is released under the MIT License.   
-Copyright © 2018-2019 [Oanh Nguyen](https://github.com/oanhnn)   
+Copyright © 2020 [Oanh Nguyen](https://github.com/oanhnn)   
 Please see [License File](./LICENSE) for more information.

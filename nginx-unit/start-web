@@ -1,0 +1,14 @@
+#!/bin/sh
+set -m
+
+# Start NGINX Unit in background
+/usr/local/sbin/unitd --no-daemon --control unix:/run/control.unit.sock &
+
+# Config NGINX Unit
+if [[ -f '/etc/unitd-config.json' ]]; then
+    curl -X PUT -d @/etc/unitd-config.json --unix-socket /run/control.unit.sock http://localhost
+fi
+
+# now we bring the primary process back into the foreground
+# and leave it there
+fg %1

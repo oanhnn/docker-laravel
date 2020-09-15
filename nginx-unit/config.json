@@ -1,0 +1,50 @@
+{
+  "config": {
+    "settings": {
+      "http": {
+        "header_read_timeout": 10,
+        "body_read_timeout": 10,
+        "send_timeout": 10,
+        "idle_timeout": 120,
+        "max_body_size": 6291456,
+        "static": {
+          "mime_types": {
+            "text/plain": [
+              ".log",
+              "README",
+              "CHANGES"
+            ]
+          }
+        }
+      }
+    },
+    "listeners": {
+      "*:80": {
+        "pass": "php-app"
+      }
+    },
+    "applications": {
+      "php-app": {
+        "type": "php",
+        "root": "/var/www/html/",
+        "limits": {
+          "timeout": 10,
+          "requests": 1000
+        },
+        "options": {
+          "file": "/usr/local/etc/php.ini",
+          "admin": {
+            "memory_limit": "256M",
+            "variables_order": "EGPCS",
+            "expose_php": "0"
+          },
+          "user": {
+            "display_errors": "0"
+          }
+        },
+        "processes": 10
+      }
+    },
+    "access_log": "/var/log/access.log"
+  }
+}
