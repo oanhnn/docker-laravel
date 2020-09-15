@@ -1,7 +1,0 @@
-#!/bin/sh
-
-while [ true ]
-do
-  su-exec www-data php /app/artisan schedule:run --verbose --no-interaction &
-  sleep 60
-done
