@@ -4,7 +4,6 @@ WORKDIR /var/www
 
 COPY artisan /usr/local/bin/
 
-# Install some extensions and runtime libraries
 RUN set -eux; \
     apk --update --no-cache add \
         curl \
