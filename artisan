@@ -1,8 +1,8 @@
 #!/bin/sh
 
-set -ex
+set -e
 
-EXEC_USER=${USER:-"www-data"}
+EXEC_USER=${EXEC_USER:-"www-data"}
 EXEC_ARGS="$@"
 EXEC_PATH=/var/www
 
