@@ -8,17 +8,68 @@
 - [x] Add `artisan` bin alias to `php /var/www/artisan`
 - [x] Auto create infinite loop when run `artisan schedule:run` with option `--sleep`
 
-## Extensions
-
-```shell
-$ php -m
-```
-
 ## Usage
 
 ### Use like official PHP docker image
 
 Use like with official PHP image
+
+### Extensions
+
+Some extensions are installed and enabled:
+
+```shell
+$ docker run --rm -it oanhnn/laravel:edge php -m
+[PHP Modules]
+bcmath
+Core
+ctype
+curl
+date
+dom
+fileinfo
+filter
+ftp
+gd
+gmp
+hash
+iconv
+imagick
+intl
+json
+libxml
+mbstring
+mysqlnd
+openssl
+pcntl
+pcre
+PDO
+pdo_mysql
+pdo_pgsql
+pdo_sqlite
+Phar
+posix
+readline
+redis
+Reflection
+session
+SimpleXML
+sockets
+sodium
+SPL
+sqlite3
+standard
+tokenizer
+xml
+xmlreader
+xmlwriter
+Zend OPcache
+zip
+zlib
+
+[Zend Modules]
+Zend OPcache
+```
 
 ### Enable XDebug
 
@@ -47,7 +98,7 @@ $ docker run --rm -it oanhnn/laravel artisan inspire
 ### Run schedule with infinite loop
 
 ```shell
-$ docker run --rm -d oanhnn/laravel artisan schedule:run --verbose --sleep
+$ docker run --rm -d oanhnn/laravel artisan schedule:run --verbose --sleep 60
 ```
 
 ### Work with docker-compose
@@ -148,10 +199,10 @@ services:
       - proxy-net
 
   # This service run schedule
-  # It using `artisan schedule:run` with `--loop` to execute command `php artisan schedule:run` in a infinite loop
+  # It using `artisan schedule:run` with `--sleep` to execute command `php artisan schedule:run` in a infinite loop
   schedule:
     <<: *app-service
-    command: artisan schedule:run --verbose --no-interaction --loop 60s
+    command: artisan schedule:run --verbose --no-interaction --sleep 60
     networks:
       - mysql-net
       - redis-net
