@@ -12,11 +12,11 @@
 
 ### Use like official PHP docker image
 
-Use like with official PHP image
+Use like with official [PHP image](https://hub.docker.com/_/php)
 
 ### Extensions
 
-Some extensions are installed and enabled:
+All extensions are installed and enabled:
 
 ```shell
 $ docker run --rm -it oanhnn/laravel:edge php -m
@@ -103,119 +103,55 @@ $ docker run --rm -d oanhnn/laravel artisan schedule:run --verbose --sleep 60
 
 ### Work with docker-compose
 
-```yml
-version: '3.5'
+You can copy all files in `example` directory to your root directory of project and run `docker-compose up -d`.
 
-# =========================================
-# X-Templates
-# =========================================
-x-app-service: &app-service
-  image: oanhnn/laravel
-  depends_on:
-    - mysql
-    - redis
-  environment:
-    REDIS_HOST:  redis
-    DB_HOST:     mysql
-    LOG_CHANNEL: stderr
-  restart: unless-stopped
-  volumes:
-    - .:/var/www
-    - .env:/var/www/.env
+### Run with UID=1000
 
-# =========================================
-# Networks
-# =========================================
-networks:
-  mysql-net: {}
-  redis-net: {}
-  proxy-net: {}
+Default `oanhnn/laravel` run:
 
-# =========================================
-# Volumes
-# =========================================
-volumes:
-  mysql-vol: {}
-  redis-vol: {}
+ - PHP-FPM worker with `www-data` user (UID=82)
+   ```shell
+   $ docker run --rm -d --name php-fpm oanhnn/laravel:edge
+   b634e56c859837d660ed8697b50e92d3f05efe89325e39c803b731c7f846864f
+   $ docker exec php-fpm ps
+   PID   USER     TIME  COMMAND
+       1 root      0:00 php-fpm: master process (/usr/local/etc/php-fpm.conf)
+       6 www-data  0:00 php-fpm: pool www
+       7 www-data  0:00 php-fpm: pool www
+       8 root      0:00 ps
+   ```
 
-# =========================================
-# Services
-# =========================================
-services:
-  redis:
-    image: redis:alpine
-    command: redis-server --bind 0.0.0.0 --requirepass ${REDIS_PASSWORD}
-    networks:
-      - redis-net
-    ports:
-      - ${REDIS_PORT:-6379}:6379
-    restart: unless-stopped
-    volumes:
-      - redis-vol:/data
+ - All artisan command via `/usr/local/bin/artisan` with `www-data` (by `su-exec`)
+   ```shell
+   $ docker-compose exec horizon ps
+   PID   USER     TIME  COMMAND
+       1 root      0:00 {artisan} /bin/sh /usr/local/bin/artisan horizon
+       7 www-data  0:00 php /var/www/artisan horizon
+      14 www-data  0:00 /usr/local/bin/php artisan horizon:supervisor bb9e6284106d
+      25 www-data  0:00 /usr/local/bin/php artisan horizon:work redis --name=defau
+      38 root      0:00 ps
+   ```
 
-  mysql:
-    image: mysql:8.0
-    # PDO Doesn't support MySQL 8 caching_sha2_password Authentication
-    # @see https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
-    command:
-      - '--default-authentication-plugin=mysql_native_password'
-      - '--character-set-server=utf8mb4'
-      - '--collation-server=utf8mb4_unicode_ci'
-    environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      MYSQL_USER:          ${DB_USERNAME}
-      MYSQL_PASSWORD:      ${DB_PASSWORD}
-      MYSQL_DATABASE:      ${DB_DATABASE}
-    networks:
-      - mysql-net
-    ports:
-      - ${DB_PORT:-3306}:3306
-    restart: unless-stopped
-    volumes:
-      - mysql-vol:/var/lib/mysql
-      - .docker/mysql:/docker-entrypoint-initdb.d
+ - Other command with root user
 
-  nginx:
-    image: nginx:stable-alpine
-    depends_on:
-      - php
-    networks:
-      - proxy-net
-    ports:
-      - 443:443
-      - 8000:80
-    volumes:
-      - ./:/var/www
-      - .docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
-      - .docker/nginx/keys:/etc/nginx/ssl
+However, you can also set run with other UID. See below example.
 
-  # This service run php-fpm
-  # It using default command in Dockerfile (from php:xx-fpm-alpine)
-  php:
-    <<: *app-service 
-    networks:
-      - mysql-net
-      - redis-net
-      - proxy-net
+```dockerfile
+FROM oanhnn/laravel:edge
 
-  # This service run schedule
-  # It using `artisan schedule:run` with `--sleep` to execute command `php artisan schedule:run` in a infinite loop
-  schedule:
-    <<: *app-service
-    command: artisan schedule:run --verbose --no-interaction --sleep 60
-    networks:
-      - mysql-net
-      - redis-net
+# Create new user with UID=1000 and GID=1000
+RUN set -eux; \
+    addgroup -g 1000 dev; \
+    adduser -u 1000 -D -G dev dev; \
 
-  # This service run queue:worker
-  # It using `artisan queue:work` or `artisan horizon`
-  horizon:
-    <<: *app-service
-    command: artisan horizon
-    networks:
-      - mysql-net
-      - redis-net
+# Set PHP-FPM user
+RUN set -eux; \
+    sed -i "s|^user =.*|user = dev|i" /usr/local/etc/php-fpm.d/www.conf; \
+    sed -i "s|^group =.*|user = dev|i" /usr/local/etc/php-fpm.d/www.conf; \
+    chown dev:dev /
 
+# Set artisan commands execute user
+ENV EXEC_USER=dev
 ```
 
 ## Contributing

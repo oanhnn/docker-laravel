@@ -32,13 +32,13 @@ if [[ -f "$EXEC_PATH/artisan" ]]; then
 
         if [[ "$SLEEP_TIME" != "0"  ]]; then
             while [ true ]; do
-                su-exec $EXEC_USER php "$EXEC_PATH/artisan" $NEW_ARGS &
+                exec su-exec $EXEC_USER php "$EXEC_PATH/artisan" $NEW_ARGS &
                 sleep $SLEEP_TIME
             done
         fi
     fi
 
-    su-exec $EXEC_USER php "$EXEC_PATH/artisan" $EXEC_ARGS
+    exec su-exec $EXEC_USER php "$EXEC_PATH/artisan" $EXEC_ARGS
 else
     exec "$@"
 fi

@@ -4,9 +4,7 @@ version: '3.5'
 # X-Templates
 # =========================================
 x-app-service: &app-service
-  build:
-    context: .
-    dockerfile: Dockerfile
+  image: oanhnn/laravel:edge
   depends_on:
     - mysql
     - redis
@@ -16,9 +14,10 @@ x-app-service: &app-service
     LOG_CHANNEL: stderr
   restart: unless-stopped
   volumes:
+    # Mount project's root directory to /var/www
     - .:/var/www
-    - .env:/var/www/.env
-    - ./xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+    # Enable XDebug
+    - .docker/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
   working_dir: /var/www
 
 # =========================================
@@ -40,6 +39,9 @@ volumes:
 # Services
 # =========================================
 services:
+
+  # The Redis service with password supported
+  # @see https://hub.docker.com/_/redis
   redis:
     image: redis:alpine
     command: redis-server --bind 0.0.0.0 --requirepass ${REDIS_PASSWORD}
@@ -51,6 +53,8 @@ services:
     volumes:
       - redis-vol:/data
 
+  # The MySQL 8.0 service with native password supported
+  # @see https://hub.docker.com/_/mysql
   mysql:
     image: mysql:8.0
     # PDO Doesn't support MySQL 8 caching_sha2_password Authentication
@@ -71,8 +75,11 @@ services:
     restart: unless-stopped
     volumes:
       - mysql-vol:/var/lib/mysql
+      # Mount init database script if need
       # - .docker/mysql:/docker-entrypoint-initdb.d
 
+  # The NGINX service with upstream to PHP FastCGI
+  # @see https://hub.docker.com/_/nginx
   nginx:
     image: nginx:stable-alpine
     depends_on:
@@ -80,13 +87,17 @@ services:
     networks:
       - proxy-net
     ports:
+      - 80:80
       # - 443:443
-      - 8000:80
     volumes:
       - ./:/var/www
       - .docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
-      # - .docker/nginx/keys:/etc/nginx/ssl
+      # Mount ssl key if listen HTTPS
+      # - .docker/nginx/ssl:/etc/nginx/ssl
 
+  # The PHP-FPM service
+  # It using default command in Dockerfile (from php:xx-fpm-alpine)
+  # @see https://hub.docker.com/_/php
   php:
     <<: *app-service
     networks:
@@ -94,13 +105,18 @@ services:
       - redis-net
       - proxy-net
 
+  # This schedule service
+  # It execute command `php artisan schedule:run` in a infinite loop with option `--sleep`.
+  # Option `--sleep` with value 60 is sleep 60 seconds
   schedule:
     <<: *app-service
-    command: artisan schedule:run --verbose --no-interaction --sleep=60
+    command: artisan schedule:run --verbose --no-interaction --sleep 60
     networks:
       - mysql-net
       - redis-net
 
+  # This queue worker service
+  # It using `artisan queue:work` or `artisan horizon`
   horizon:
     <<: *app-service
     command: artisan horizon
