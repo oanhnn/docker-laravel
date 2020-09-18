@@ -142,13 +142,13 @@ FROM oanhnn/laravel:edge
 # Create new user with UID=1000 and GID=1000
 RUN set -eux; \
     addgroup -g 1000 dev; \
-    adduser -u 1000 -D -G dev dev; \
+    adduser -u 1000 -D -G dev dev
 
 # Set PHP-FPM user
 RUN set -eux; \
     sed -i "s|^user =.*|user = dev|i" /usr/local/etc/php-fpm.d/www.conf; \
     sed -i "s|^group =.*|user = dev|i" /usr/local/etc/php-fpm.d/www.conf; \
-    chown dev:dev /
+    chown dev:dev /var/www
 
 # Set artisan commands execute user
 ENV EXEC_USER=dev
