@@ -7,6 +7,7 @@
 - [x] Installed XDebug extension but disable by default
 - [x] Add `artisan` bin alias to `php /var/www/artisan`
 - [x] Auto create infinite loop when run `artisan schedule:run` with option `--sleep`
+- [x] Auto build and push by Github Workflow
 
 ## Usage
 
@@ -161,7 +162,7 @@ This is to ensure proper review of all the code.
 
 Fork the project, create a feature branch, and send a pull request.
 
-If you would like to help take a look at the [list of issues](https://github.com/oanhnn/docker-php/issues).
+If you would like to help take a look at the [list of issues](https://github.com/oanhnn/docker-laravel/issues).
 
 ## License
 

@@ -9,6 +9,7 @@ example
 .travis.yml
 .github
 README.md
+CHANGELOG.md
 
 # IDE and editor specific files #
 #################################
