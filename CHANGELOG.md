@@ -29,7 +29,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 
-## v1.0.0 - 2018-07-11
+## v1.0.0 - 2020-10-21
 
 First release
 
