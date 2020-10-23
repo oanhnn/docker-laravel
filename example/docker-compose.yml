@@ -4,7 +4,7 @@ version: '3.5'
 # X-Templates
 # =========================================
 x-app-service: &app-service
-  image: oanhnn/laravel:edge
+  image: oanhnn/laravel:test
   depends_on:
     - mysql
     - redis
@@ -12,12 +12,14 @@ x-app-service: &app-service
     REDIS_HOST:  redis
     DB_HOST:     mysql
     LOG_CHANNEL: stderr
+    QUEUE_CONNECTION: redis
+    CACHE_DRIVER:     redis
   restart: unless-stopped
   volumes:
     # Mount project's root directory to /var/www
     - .:/var/www
     # Enable XDebug
-    - .docker/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+    - .docker/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:ro
   working_dir: /var/www
 
 # =========================================
@@ -44,11 +46,8 @@ services:
   # @see https://hub.docker.com/_/redis
   redis:
     image: redis:alpine
-    command: redis-server --bind 0.0.0.0 --requirepass ${REDIS_PASSWORD}
     networks:
       - redis-net
-    ports:
-      - ${REDIS_PORT:-6379}:6379
     restart: unless-stopped
     volumes:
       - redis-vol:/data
@@ -57,12 +56,6 @@ services:
   # @see https://hub.docker.com/_/mysql
   mysql:
     image: mysql:8.0
-    # PDO Doesn't support MySQL 8 caching_sha2_password Authentication
-    # @see https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
-    command:
-      - '--default-authentication-plugin=mysql_native_password'
-      - '--character-set-server=utf8mb4'
-      - '--collation-server=utf8mb4_unicode_ci'
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_USER:          ${DB_USERNAME}
@@ -70,13 +63,11 @@ services:
       MYSQL_DATABASE:      ${DB_DATABASE}
     networks:
       - mysql-net
-    ports:
-      - ${DB_PORT:-3306}:3306
     restart: unless-stopped
     volumes:
       - mysql-vol:/var/lib/mysql
       # Mount init database script if need
-      # - .docker/mysql:/docker-entrypoint-initdb.d
+      # - .docker/mysql:/docker-entrypoint-initdb.d:ro
 
   # The NGINX service with upstream to PHP FastCGI
   # @see https://hub.docker.com/_/nginx
@@ -88,12 +79,9 @@ services:
       - proxy-net
     ports:
       - 80:80
-      # - 443:443
     volumes:
-      - ./:/var/www
-      - .docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
-      # Mount ssl key if listen HTTPS
-      # - .docker/nginx/ssl:/etc/nginx/ssl
+      - ./:/var/www:ro
+      - .docker/nginx/default.conf:/etc/nginx/templates/default.conf.template:ro
 
   # The PHP-FPM service
   # It using default command in Dockerfile (from php:xx-fpm-alpine)
@@ -119,7 +107,7 @@ services:
   # It using `artisan queue:work` or `artisan horizon`
   horizon:
     <<: *app-service
-    command: artisan horizon
+    command: artisan queue:work
     networks:
       - mysql-net
       - redis-net

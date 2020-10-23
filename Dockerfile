@@ -1,4 +1,5 @@
-FROM php:7.4-fpm-alpine
+# Base stage
+FROM php:7.4-fpm-alpine AS base
 
 WORKDIR /var/www
 
@@ -59,3 +60,14 @@ RUN set -eux; \
     apk del .build-deps; \
     \
     php --version
+
+# Test stage
+FROM base AS test
+
+RUN set -eux; \
+    php -v; \
+    php -m; \
+    php --ini
+
+# Release stage
+FROM base AS release
