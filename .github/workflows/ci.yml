@@ -1,4 +1,4 @@
-name: Build and test
+name: CI
 
 on:
   # Build the nightly version at at 8:20 AM UTC
@@ -18,6 +18,7 @@ on:
 
 jobs:
   test:
+    name: Build and test
     runs-on: ubuntu-latest
     env:
       DOCKER_IMAGE: oanhnn/laravel
@@ -84,6 +85,7 @@ jobs:
         working-directory: ./ci-test
 
   push:
+    name: Build and push to GHCR.IO
     runs-on: ubuntu-latest
     needs: [ 'test' ]
     if: github.event_name != 'pull_request'
@@ -108,9 +110,9 @@ jobs:
             VERSION=pr-${{ github.event.number }}
           fi
           TAGS="${DOCKER_IMAGE}:${VERSION}"
-          if [ "${{ github.event_name }}" = "push" ]; then
-            TAGS="$TAGS,${DOCKER_IMAGE}:sha-${GITHUB_SHA::8}"
-          fi
+          # if [ "${{ github.event_name }}" = "push" ]; then
+          #   TAGS="$TAGS,${DOCKER_IMAGE}:sha-${GITHUB_SHA::8}"
+          # fi
           echo ::set-output name=version::${VERSION}
           echo ::set-output name=tags::${TAGS}
           echo ::set-output name=created::$(date -u +'%Y-%m-%dT%H:%M:%SZ')

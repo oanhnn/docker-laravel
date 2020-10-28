@@ -1,5 +1,10 @@
 # oanhnn/docker-laravel
 
+Alpine based [Laravel](https://laravel.com) image.
+
+[![Build Status](https://github.com/oanhnn/docker-laravel/workflows/CI/badge.svg)](https://github.com/oanhnn/docker-laravel/actions)
+[![Software License](https://img.shields.io/github/license/oanhnn/docker-laravel.svg)](https://github.com/oanhnn/docker-laravel/blob/master/LICENSE)
+
 ## Features
 
 - [x] Build from official PHP docker image
@@ -8,6 +13,23 @@
 - [x] Add `artisan` bin alias to `php /var/www/artisan`
 - [x] Auto create infinite loop when run `artisan schedule:run` with option `--sleep`
 - [x] Auto build and push by Github Workflow
+- [x] Tagging follow [sermatic version](https://semver.org/spec/v2.0.0.html)
+
+## Tags
+
+Image `oanhnn/laravel`
+
+- `X.Y.Z`  - the PATH version (git tag `vX.Y.Z`)
+- `X.Y`    - the MINOR version 
+- `X`      - the MAJOR version
+- `latest` - the latest version
+
+Image `ghcr.io/oanhnn/laravel`
+
+- `edge`         - the edge version, it is newest code from branch `master`
+- `nightly`      - the nightly version, it is builded daily at 8:20 AM UTC
+
+> NOTE: Using sematic version for production
 
 ## Usage
 
@@ -168,4 +190,4 @@ If you would like to help take a look at the [list of issues](https://github.com
 
 This project is released under the MIT License.   
 Copyright © 2020 [Oanh Nguyen](https://github.com/oanhnn)   
-Please see [License File](./LICENSE) for more information.
+Please see [License File](https://github.com/oanhnn/docker-laravel/blob/master/LICENSE) for more information.

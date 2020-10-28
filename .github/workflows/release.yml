@@ -1,4 +1,4 @@
-name: Publish Releases to Hub
+name: Release
 
 # When its time to do a release do a full cross platform build for all supported
 # architectures and push all of them to Docker Hub.
@@ -10,6 +10,7 @@ on:
 
 jobs:
   build:
+    name: Build and push to Docker Hub
     runs-on: ubuntu-latest
     env:
       DOCKER_IMAGE: oanhnn/laravel
@@ -76,8 +77,9 @@ jobs:
             org.opencontainers.image.licenses=${{ github.event.repository.license.name }}
           platforms: |
             linux/amd64
-            linux/arm/v6
+            linux/arm64
             linux/arm/v7
+            linux/arm/v6
           pull: true
           push: true
           tags: ${{ steps.prepare.outputs.tags }}
