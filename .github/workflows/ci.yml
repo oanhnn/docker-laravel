@@ -71,7 +71,10 @@ jobs:
           sed -i "s|^REDIS_PASSWORD=.*|REDIS_PASSWORD=null|g" ./ci-test/.env
 
       - name: Setup docker-compose
-        run: cp ./example/* ./ci-test/
+        run: |
+          cp ./example/docker-compose.yml ./ci-test/
+          cp ./example/.docker            ./ci-test/
+          sed -i "s|${{ env.DOCKER_IMAGE }}:latest|${{ env.DOCKER_IMAGE }}:test|g" ./ci-test/docker-compose.yml
 
       - name: Run with docker
         run: |

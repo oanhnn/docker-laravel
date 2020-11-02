@@ -4,7 +4,7 @@ version: '3.5'
 # X-Templates
 # =========================================
 x-app-service: &app-service
-  image: oanhnn/laravel:test
+  image: oanhnn/laravel:latest
   depends_on:
     - mysql
     - redis
