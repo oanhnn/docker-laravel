@@ -115,14 +115,18 @@ Config your IDE to [work with XDebug](https://devilbox.readthedocs.io/en/latest/
 ### Run artisan command
 
 ```shell
-$ docker run --rm -it oanhnn/laravel artisan inspire
+$ docker run --rm -it -v $(pwd):/var/www oanhnn/laravel artisan inspire
 ```
 
-### Run schedule with infinite loop
+### Run artisan schedule:run with infinite loop
+
+To run `artisan schedule:run` in infinite loop, you MUST add option `--sleep <seconds>`. With `<seconds>` is loop sleep in seconds .
 
 ```shell
-$ docker run --rm -d oanhnn/laravel artisan schedule:run --verbose --sleep 60
+$ docker run --rm -d -v $(pwd):/var/www oanhnn/laravel artisan schedule:run --verbose --sleep 60
 ```
+
+> NOTE: This feature like command `artisan schedule:work` in Laravel 8+
 
 ### Work with docker-compose
 
