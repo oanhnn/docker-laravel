@@ -19,7 +19,7 @@ on:
 jobs:
   test:
     name: Build and test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     env:
       DOCKER_IMAGE: oanhnn/laravel
     steps:
@@ -89,7 +89,7 @@ jobs:
 
   push:
     name: Build and push to GHCR.IO
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     needs: [ 'test' ]
     if: github.event_name != 'pull_request'
     env:
