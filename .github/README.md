@@ -138,7 +138,7 @@ Default `oanhnn/laravel` run:
 
  - PHP-FPM worker with `www-data` user (UID=82)
    ```shell
-   $ docker run --rm -d --name php-fpm oanhnn/laravel:edge
+   $ docker run --rm -d --name php-fpm oanhnn/laravel:latest
    b634e56c859837d660ed8697b50e92d3f05efe89325e39c803b731c7f846864f
    $ docker exec php-fpm ps
    PID   USER     TIME  COMMAND
@@ -164,7 +164,7 @@ Default `oanhnn/laravel` run:
 However, you can also set run with other UID. See below example.
 
 ```dockerfile
-FROM oanhnn/laravel:edge
+FROM oanhnn/laravel:latest
 
 # Create new user with UID=1000 and GID=1000
 RUN set -eux; \
@@ -181,6 +181,22 @@ RUN set -eux; \
 ENV EXEC_USER=dev
 ```
 
+### Fix permissions when mouting
+
+When mounting file or directory to container, you can have error about file permissions. To fix it, you can run:
+
+```shell
+$ sudo setfacl -dR -m u:82:rwX -m u:$(whoami):rwX ./
+$ sudo setfacl -R  -m u:82:rwX -m u:$(whoami):rwX ./
+```
+
+Or
+
+```shell
+$ sudo chmod -R g+w         bootstrap/cache storage
+$ sudo chown -R $(whoami):82 bootstrap/cache storage
+```
+
 ## Contributing
 
 All code contributions must go through a pull request and approved by a core developer before being merged. 
@@ -190,8 +206,16 @@ Fork the project, create a feature branch, and send a pull request.
 
 If you would like to help take a look at the [list of issues](https://github.com/oanhnn/docker-laravel/issues).
 
+## Security
+
+If you discover any security related issues, please contact to [me](#contact) instead of using the issue tracker.
+
 ## License
 
-This project is released under the MIT License.   
-Copyright © 2020 [Oanh Nguyen](https://github.com/oanhnn)   
-Please see [License File](https://github.com/oanhnn/docker-laravel/blob/master/LICENSE) for more information.
+This project is available under the [MIT license](https://tldrlegal.com/license/mit-license).
+
+## Contact
+
+Copyright (c) 2021 [Oanh Nguyen](https://github.com/oanhnn)
+
+[![@oanhnn](https://img.shields.io/badge/github-oanhnn-green.svg)](https://github.com/oanhnn) [![@oanhnn](https://img.shields.io/badge/twitter-oanhnn-blue.svg)](https://twitter.com/oanhnn)

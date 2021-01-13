@@ -81,7 +81,7 @@ jobs:
           docker-compose up -d
           sudo chmod -R g+w         bootstrap/cache storage
           sudo chown -R `whoami`:82 bootstrap/cache storage
-          sleep 10s
+          sleep 15s
           docker-compose exec -T php artisan migrate --seed
           curl --silent --show-error --fail http://127.0.0.1/
           docker-compose down
